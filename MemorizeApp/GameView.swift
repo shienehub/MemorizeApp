@@ -19,6 +19,13 @@ struct GameView: View {
             }
         }
         .padding()
+        .alert("Game over", isPresented: $viewModel.gameState.isGameOver) {
+            Button("Restart") {
+                viewModel.restart()
+            }
+        } message: {
+            Text("Your scroe: \(viewModel.gameState.score)")
+        }
     }
 }
 

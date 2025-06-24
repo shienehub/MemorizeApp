@@ -53,5 +53,16 @@ class GameViewModel: ObservableObject {
             selectedIndices = []
         }
         
+        checkGameOver()
+        
+    }
+    
+    func checkGameOver() {
+        gameState.isGameOver = gameState.cards.allSatisfy { $0.isMatched }
+    }
+    
+    func restart() {
+        let cards = Card.sampleCards
+        gameState = GameState(cards: cards)
     }
 }
