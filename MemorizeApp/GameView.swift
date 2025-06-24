@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct GameView: View {
-    @StateObject var viewModel: GameViewModel
+    @ObservedObject var viewModel: GameViewModel
     
     var body: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))]) {

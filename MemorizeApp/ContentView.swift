@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var viewModel = GameViewModel(cards: [
+    @StateObject private var viewModel = GameViewModel(cards: [
         Card(symbol: "A"),Card(symbol: "B"),
         Card(symbol: "A"),Card(symbol: "B"),
     ])
