@@ -11,6 +11,12 @@ struct GameView: View {
     @ObservedObject var viewModel: GameViewModel
     
     var body: some View {
+        
+        Text("Scroe: \(viewModel.gameState.score)")
+            .font(.largeTitle)
+            .bold()
+            .padding()
+        
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))]) {
             ForEach(Array(viewModel.gameState.cards.enumerated()), id: \.element.id) { index, card in
                 CardView(card: card) {
