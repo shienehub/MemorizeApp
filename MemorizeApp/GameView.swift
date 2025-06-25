@@ -12,6 +12,17 @@ struct GameView: View {
     
     var body: some View {
         
+        Picker("Theme", selection: $viewModel.currentTheme) {
+            ForEach([Theme.animal, Theme.fruit, Theme.vehicle], id: \.self) { theme in
+                Text(theme.name).tag(theme)
+            }
+        }
+        .pickerStyle(.segmented)
+        .padding()
+        .onChange(of: viewModel.currentTheme) { _ in
+            viewModel.changeTheme(to: viewModel.currentTheme)
+        }
+        
         Text("Scroe: \(viewModel.gameState.score)")
             .font(.largeTitle)
             .bold()
@@ -36,5 +47,7 @@ struct GameView: View {
 }
 
 #Preview {
-    GameView(viewModel: GameViewModel(cards: Card.sampleCards))
+    let viewModel = GameViewModel()
+    viewModel.changeTheme(to: .vehicle)
+    return GameView(viewModel: viewModel)
 }

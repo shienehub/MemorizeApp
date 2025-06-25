@@ -10,11 +10,29 @@ import Combine
 
 class GameViewModel: ObservableObject {
     @Published var gameState: GameState
+    @Published var currentTheme: Theme = .animal
     
     private var selectedIndices: [Int] = []
     
+    init() {
+        self.gameState = GameState(cards: [])
+        self.changeTheme(to: currentTheme)
+    }
+    
     init(cards: [Card]) {
         self.gameState = GameState(cards: cards)
+    }
+    
+    func changeTheme(to theme: Theme) {
+        currentTheme = theme
+        
+        let symbols = (theme.symbols + theme.symbols).shuffled()
+        let cards = symbols.map { symbol in
+            Card(id: UUID(), symbol: symbol, isFaceUp: false, isMatched: false)
+        }
+        gameState = GameState(cards: cards)
+        gameState.isGameOver = false
+        selectedIndices = []
     }
     
     func flipCard(at index: Int) {
