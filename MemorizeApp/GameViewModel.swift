@@ -26,14 +26,7 @@ class GameViewModel: ObservableObject {
     
     func changeTheme(to theme: Theme) {
         currentTheme = theme
-        
-        let symbols = (theme.symbols + theme.symbols).shuffled()
-        let cards = symbols.map { symbol in
-            Card(id: UUID(), symbol: symbol, isFaceUp: false, isMatched: false)
-        }
-        gameState = GameState(cards: cards)
-        gameState.isGameOver = false
-        selectedIndices = []
+        resetGame()
     }
     
     func flipCard(at index: Int) {
@@ -91,7 +84,8 @@ class GameViewModel: ObservableObject {
     }
     
     func resetGame() {
-        let symbols = Array(currentTheme.symbols.shuffled().prefix(currentDifficulty.cardCount / 2))
+        let cardPairs = max(1, currentDifficulty.cardCount / 2)
+        let symbols = Array(currentTheme.symbols.shuffled().prefix(cardPairs))
         let cardSymbols = (symbols + symbols).shuffled()
         let cards = cardSymbols.map { symbol in
             Card(id: UUID(), symbol: symbol, isFaceUp: false, isMatched: false)
