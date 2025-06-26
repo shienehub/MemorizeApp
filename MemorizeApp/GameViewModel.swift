@@ -11,6 +11,7 @@ import Combine
 class GameViewModel: ObservableObject {
     @Published var gameState: GameState
     @Published var currentTheme: Theme = .animal
+    @Published var currentDifficulty: Difficulty = .easy
     
     private var selectedIndices: [Int] = []
     
@@ -82,5 +83,22 @@ class GameViewModel: ObservableObject {
     func restart() {
         let cards = Card.sampleCards
         gameState = GameState(cards: cards)
+    }
+    
+    func chagneDifficulty(to difficulty: Difficulty) {
+        currentDifficulty = difficulty
+        resetGame()
+    }
+    
+    func resetGame() {
+        let symbols = Array(currentTheme.symbols.shuffled().prefix(currentDifficulty.cardCount / 2))
+        let cardSymbols = (symbols + symbols).shuffled()
+        let cards = cardSymbols.map { symbol in
+            Card(id: UUID(), symbol: symbol, isFaceUp: false, isMatched: false)
+        }
+        
+        gameState = GameState(cards: cards)
+        gameState.isGameOver = false
+        selectedIndices = []
     }
 }

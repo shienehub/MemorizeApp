@@ -12,6 +12,17 @@ struct GameView: View {
     
     var body: some View {
         
+        Picker("Difficulty", selection: $viewModel.currentDifficulty) {
+            ForEach(Difficulty.allCases, id:\.self) { difficulty in
+                Text(difficulty.rawValue).tag(difficulty)
+            }
+        }
+        .pickerStyle(.segmented)
+        .padding()
+        .onChange(of: viewModel.currentDifficulty) { _ in
+            viewModel.chagneDifficulty(to: viewModel.currentDifficulty)
+        }
+        
         Picker("Theme", selection: $viewModel.currentTheme) {
             ForEach([Theme.animal, Theme.fruit, Theme.vehicle], id: \.self) { theme in
                 Text(theme.name).tag(theme)
