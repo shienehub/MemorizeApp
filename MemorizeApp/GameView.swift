@@ -12,9 +12,8 @@ struct GameView: View {
     
     var body: some View {
         
-//        let _ = viewModel.currentDifficulty
-        
         VStack(spacing: 0) {
+            Spacer()
             Picker("Difficulty", selection: $viewModel.currentDifficulty) {
                 ForEach(Difficulty.allCases, id:\.self) { difficulty in
                     Text(difficulty.rawValue).tag(difficulty)
@@ -23,11 +22,10 @@ struct GameView: View {
             .pickerStyle(.segmented)
             .padding(.horizontal)
             .padding(.top)
-//            .frame(width: 300, height: 44)
             .onChange(of: viewModel.currentDifficulty) { _ in
                 viewModel.chagneDifficulty(to: viewModel.currentDifficulty)
             }
-            
+            Spacer()
             Picker("Theme", selection: $viewModel.currentTheme) {
                 ForEach([Theme.animal, Theme.fruit, Theme.vehicle], id: \.self) { theme in
                     Text(theme.name).tag(theme)
@@ -43,6 +41,10 @@ struct GameView: View {
                 .font(.largeTitle)
                 .bold()
                 .padding()
+            Button("Reset") {
+                viewModel.resetGame()
+            }
+            Spacer()
         }
         .background(Color(UIColor.systemBackground))
 //        .zIndex(1)

@@ -138,6 +138,7 @@ class GameViewModel: ObservableObject {
     }
     
     func resetGame() {
+        totalFlips = 0
         addEvent(event_type: "game_reset")
         
         let cardPairs = max(1, currentDifficulty.cardCount / 2)
@@ -150,6 +151,7 @@ class GameViewModel: ObservableObject {
         gameState = GameState(cards: cards)
         gameState.isGameOver = false
         selectedIndices = []
+        
     }
     
     func checkGameOver() {
