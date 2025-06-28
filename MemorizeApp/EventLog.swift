@@ -7,10 +7,13 @@
 
 import Foundation
 
+typealias EventProperties = [String: Any]
+
 struct EventLog {
     var event_id: UUID
     var event_time: Date
     var event_type: String
+    var properties: EventProperties
     
     var user_id: String?
     var session_id: UUID?

@@ -28,11 +28,12 @@ class GameViewModel: ObservableObject {
         self.gameState = GameState(cards: cards)
     }
     
-    func addEvent(event_type: String, properties: [String: Any] = [:]) {
+    func addEvent(event_type: String, properties: EventProperties = [:]) {
         var event = EventLog(
             event_id: UUID(),
             event_time: Date(),
-            event_type: event_type,
+            event_type: event_type, 
+            properties: properties,
             user_id: "testor001",
             session_id: currentSessionId,
             theme: currentTheme,
