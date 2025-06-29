@@ -9,6 +9,8 @@ import SwiftUI
 
 struct GameView: View {
     @ObservedObject var viewModel: GameViewModel
+    @State private var isGameOver = false
+    
     
     var body: some View {
         
@@ -46,13 +48,13 @@ struct GameView: View {
                     }
                 }
                 .padding()
-                .alert("Game over", isPresented: $viewModel.gameState.isGameOver) {
-                    Button("Restart") {
-                        viewModel.restart()
-                    }
-                } message: {
-                    Text("Your scroe: \(viewModel.gameState.score)")
-                }
+//                .alert("Game over", isPresented: $viewModel.gameState.isGameOver) {
+//                    Button("Restart") {
+//                        viewModel.restart()
+//                    }
+//                } message: {
+//                    Text("Your scroe: \(viewModel.gameState.score)")
+//                }
                 
             }//ScrollView
             .frame(minHeight: 450)
@@ -75,9 +77,25 @@ struct GameView: View {
             .background(Color(UIColor.systemBackground))
             
         }//Vstack
-//        .safeAreaInset(edge: .top, content: {
-//            Color.clear.frame(height: 44)
-//        })
+        .onChange(of: viewModel.gameState.isGameOver) { newValue in
+            if newValue {
+                isGameOver = true
+            }
+        }
+        .navigationTitle("Game View")
+        .navigationDestination(isPresented: $isGameOver) {
+            GameResultView(
+                score: viewModel.gameState.score,
+               duration: viewModel.gameDuration,
+               flips: viewModel.totalFlips,
+               theme: viewModel.currentTheme.name,
+               difficulty: viewModel.currentDifficulty.rawValue,
+                onPlayAgain: {
+                    isGameOver = false
+                    viewModel.resetGame()
+                }
+            )
+        }
         .padding()
     }//body
     

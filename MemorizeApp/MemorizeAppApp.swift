@@ -13,19 +13,21 @@ struct MemorizeAppApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .onChange(of: scenePhase) { newPhase in
-                    switch newPhase {
-                    case .active:
-                        print("Event: app_foregrounded")
-                    case .inactive:
-                        print("Event: app_inactive")
-                    case .background:
-                        print("Event: app_backgrounded")
-                   @unknown default:
-                        break
+            NavigationStack {
+                ContentView()
+                    .onChange(of: scenePhase) { newPhase in
+                        switch newPhase {
+                        case .active:
+                            print("Event: app_foregrounded")
+                        case .inactive:
+                            print("Event: app_inactive")
+                        case .background:
+                            print("Event: app_backgrounded")
+                       @unknown default:
+                            break
+                        }
                     }
-                }
+            }
         }
     }
 }

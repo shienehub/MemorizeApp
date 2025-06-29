@@ -12,12 +12,14 @@ class GameViewModel: ObservableObject {
     @Published var gameState: GameState
     @Published var currentTheme: Theme = .animal
     @Published var currentDifficulty: Difficulty = .easy
+    @Published var gameDuration: TimeInterval = 0
     
     private var selectedIndices: [Int] = []
-    private var totalFlips: Int = 0
+     var totalFlips: Int = 0
     private var gameStartTime: Date?
     private var currentSessionId: UUID = UUID()
     private var eventLogs: [EventLog] = []
+
     
     init() {
         self.gameState = GameState(cards: [])
@@ -164,6 +166,7 @@ class GameViewModel: ObservableObject {
     
     func endgame() {
         let duration = Date().timeIntervalSince(gameStartTime ?? Date())
+        gameDuration = Date().timeIntervalSince(gameStartTime ?? Date())
         addEvent(event_type: "game_ended", properties: [
             "score": gameState.score,
             "time": duration,

@@ -11,7 +11,7 @@ struct ContentView: View {
     @StateObject private var viewModel = GameViewModel()
     
     var body: some View {
-        GameView(viewModel: viewModel)
+        NavigationLink("Start Game", destination: GameView(viewModel: viewModel))
     }
 }
 
